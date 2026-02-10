@@ -41,3 +41,56 @@ They were obtained by cloning the official JediTerm repository and running:
 ```bash
 ./gradlew build
 ./gradlew lib
+```
+
+The generated JAR files are then used as-is by Terminala.
+
+This approach is intentional:
+
+No dependency resolution required
+
+No Gradle/Maven setup needed to run
+
+Simplifies usage and distribution
+
+While this is not the ideal dependency model, it is practical and fully compliant with the licenses involved.
+
+## Licensing Terminala
+
+Terminala’s own source code is released under the MIT License.
+See the LICENSE file for details.
+
+## JediTerm
+
+JediTerm is developed by JetBrains and is licensed under the Apache License 2.0.
+
+Copyright © JetBrains
+
+## License: Apache License 2.0
+
+The full license text is included in LICENSE-JEDITERM
+
+This project does not claim ownership of JediTerm or any of its dependencies.
+
+## Releases
+
+The release/ directory contains a ZIP archive with a ready-to-run version of Terminala, including:
+
+All required JAR files
+
+No build step required
+
+No external dependencies
+
+## Contributions
+
+This is currently a personal project and does not accept external contributions at this time.
+
+## Disclaimer
+
+Terminala is an independent project and is not affiliated with or endorsed by JetBrains.
+JediTerm is used in accordance with its Apache 2.0 license.
+
+## Status
+
+Active development.
