@@ -1,0 +1,100 @@
+<?xml version = "1.0"?>
+<project default="package-project">
+	<!-- Editable parts - init -->
+	<property name="appName" value="Terminala" />
+	<property name="appDescription" value="Agrupador de terminales de JediTerm. Totalmente realizado en Java ;)" />
+	<property name="appMainClass" value="ar.com.yjere.terminala.Terminala" />
+	<!-- <property name="appClassPath" value="" /> -->
+	<property name="appFabricator" value="Yjere" />
+	<property name="includeSrcInPackage" value="false" />
+	<property name="appMajorBuildNumber" value="1.0" />
+	<property name="source" value="1.8" />
+	<property name="target" value="1.8" />
+	<property name="appPackBinary" value="${appName}.jar" />
+	<property name="appSrcDirectory" value="src/" />
+	<property name="appBinDirectory" value="bin/" />
+	<property name="appLibDirectory" value="lib/" />
+	<property name="appPackDirectory" value="dpl/" />
+	<property name="appLogDirectory" value="log/" />
+	<property name="appIncludePackages" value="**" />
+	<property name="appExcludePackages" value="**/*svn**,**/test/**" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<!-- Editable parts - end -->
+	<tstamp>
+		<format property="today" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+	</tstamp>
+
+	<target name="generate-version-number">
+		<buildnumber file="minor-build-number" />
+	</target>
+
+	<target name="get-jar-list">
+		<path id="class.path">
+			<fileset id="jar-fileset" dir="${appLibDirectory}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<fileset id="dist.contents" refid="jar-fileset" />
+		<property name="prop.dist.contents" refid="dist.contents" />
+		<property name="jarFilesListRaw" value="${prop.dist.contents}" />
+		<loadresource property="appJarFilesList">
+			<propertyresource name="jarFilesListRaw" />
+			<filterchain>
+				<tokenfilter>
+					<filetokenizer />
+					<replacestring from=";" to=" " />
+				</tokenfilter>
+			</filterchain>
+		</loadresource>
+		<condition property="appJarFilesList" value="">
+			<not>
+				<isset property="appJarFilesList" />
+			</not>
+		</condition>
+	</target>
+
+	<target name="clean">
+		<delete dir="${appBinDirectory}" />
+		<delete file="${appPackDirectory}${appPackBinary}" />
+	</target>
+	<target name="init" depends="clean">
+		<mkdir dir="${appBinDirectory}" />
+		<mkdir dir="${appLibDirectory}" />
+		<mkdir dir="${appPackDirectory}" />
+		<mkdir dir="${appLogDirectory}" />
+		<copy includeemptydirs="true" todir="${appBinDirectory}">
+			<fileset dir="${appSrcDirectory}">
+				<include name="**/*.java" if="${includeSrcInPackage}" />
+			</fileset>
+		</copy>
+        <copy includeemptydirs="true" todir="${appBinDirectory}">
+            <fileset dir="${appSrcDirectory}">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+	</target>
+
+	<target name="build-project" depends="clean,init,get-jar-list">
+		<javac debug="true" debuglevel="${debuglevel}" srcdir="${appSrcDirectory}" destdir="${appBinDirectory}" includeantruntime="false" source="${source}" target="${target}">
+			<compilerarg value="-Xlint:-options" />
+			<src path="${appSrcDirectory}" />
+			<classpath refid="class.path" />
+		</javac>
+	</target>
+
+	<target name="package-project" depends="clean,init,build-project,generate-version-number">
+		<jar jarfile="${appPackDirectory}${appPackBinary}" basedir="${appBinDirectory}" includes="${appIncludePackages}" excludes="${appExcludePackages}">
+			<manifest>
+				<attribute name="Created-By" value="${java.version} (${java.vendor})" />
+				<attribute name="Main-Class" value="${appMainClass}" />
+				<attribute name="Class-Path" value="${appJarFilesList}" /> <!-- ${appClassPath} -->
+				<attribute name="Ant-Version" value="${ant.version}" />
+				<attribute name="Application-Name" value="${appName}" />
+				<attribute name="Application-Description" value="${appDescription}" />
+				<attribute name="Application-Version" value="${appMajorBuildNumber}.${build.number}" />
+				<attribute name="Application-Fabricator" value="${appFabricator}" />
+				<attribute name="Application-Release-Date" value="${today}" />
+			</manifest>
+		</jar>
+	</target>
+</project>

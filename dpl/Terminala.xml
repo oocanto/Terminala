@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout>
+    <split divider="1547" orientation="horizontal">
+        <split divider="550" orientation="vertical">
+            <split divider="1143" orientation="horizontal">
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+            </split>
+            <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+        </split>
+        <split divider="492" orientation="vertical">
+            <split divider="244" orientation="vertical">
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+            </split>
+            <split divider="244" orientation="vertical">
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+                <terminal backgroundColor="#0f2b3e" directory="~" fontSize="15.0"/>
+            </split>
+        </split>
+    </split>
+</layout>
