@@ -59,6 +59,12 @@ public class Terminala extends JFrame {
     String value = null;
     Manifest manifest = null;
 
+    // Variables para maximizar
+    private TerminalPanel maximizedTerminal = null;
+    private Container maximizedTerminalOriginalParent = null;
+    private Component maximizedTerminalOriginalRoot = null;
+    private int maximizedTerminalPosition = -1; // 0=left, 1=right para JSplitPane
+
     public Terminala() {
 
         URL iconUrl = Terminala.class.getClassLoader().getResource("icons/terminal_64.png");
@@ -127,6 +133,13 @@ public class Terminala extends JFrame {
                                                 && lastActiveTerminal != null) {
                                             splitTerminal(lastActiveTerminal, JSplitPane.HORIZONTAL_SPLIT);
                                             return true;
+                                        } else {
+                                            // Ctrl + M - toggle maximize
+                                            if (e.getKeyCode() == KeyEvent.VK_M && !e.isShiftDown()
+                                                    && lastActiveTerminal != null) {
+                                                toggleMaximize(lastActiveTerminal);
+                                                return true;
+                                            }
                                         }
                                     }
                                 }
@@ -161,6 +174,61 @@ public class Terminala extends JFrame {
         if (lastActiveTerminal != null) {
             lastActiveTerminal.getTerminal().requestFocusInWindow();
         }
+    }
+
+    public void toggleMaximize(TerminalPanel terminal) {
+        if (this.maximizedTerminal == terminal) {
+            // Restore
+            this.currentContainer.removeAll();
+
+            if (this.maximizedTerminalOriginalParent instanceof JSplitPane) {
+                JSplitPane parent = (JSplitPane) this.maximizedTerminalOriginalParent;
+                if (this.maximizedTerminalPosition == 0) {
+                    parent.setLeftComponent(terminal);
+                } else {
+                    parent.setRightComponent(terminal);
+                }
+            } else {
+                this.maximizedTerminalOriginalParent.add(terminal);
+            }
+
+            // Restore root component
+            this.currentContainer.add(this.maximizedTerminalOriginalRoot);
+
+            this.maximizedTerminal = null;
+            this.maximizedTerminalOriginalParent = null;
+            this.maximizedTerminalOriginalRoot = null;
+            this.maximizedTerminalPosition = -1;
+
+        } else {
+            // Maximize
+            Container parent = this.terminalParents.get(terminal);
+
+            // Save original state
+            this.maximizedTerminal = terminal;
+            this.maximizedTerminalOriginalParent = parent;
+
+            // Save root component
+            if (this.currentContainer.getComponentCount() > 0) {
+                this.maximizedTerminalOriginalRoot = this.currentContainer.getComponent(0);
+            }
+
+            if (parent instanceof JSplitPane) {
+                JSplitPane split = (JSplitPane) parent;
+                this.maximizedTerminalPosition = (split.getLeftComponent() == terminal) ? 0 : 1;
+            }
+
+            // Remove from parent
+            parent.remove(terminal);
+
+            // Add to main container
+            this.currentContainer.removeAll();
+            this.currentContainer.add(terminal);
+        }
+
+        this.currentContainer.revalidate();
+        this.currentContainer.repaint();
+        terminal.getTerminal().requestFocusInWindow();
     }
 
     public void setLastActiveTerminal(TerminalPanel terminal) {

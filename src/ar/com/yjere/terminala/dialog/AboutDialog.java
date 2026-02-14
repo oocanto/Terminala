@@ -35,7 +35,7 @@ public class AboutDialog extends JDialog {
     public AboutDialog(JFrame parent, String version) {
         super(parent, "About", true);
 
-        setSize(350, 450);
+        setSize(350, 500);
         setLocationRelativeTo(parent);
         setResizable(false);
 
@@ -87,6 +87,9 @@ public class AboutDialog extends JDialog {
         JLabel shortcutVerticalSplit = new JLabel("Ctrl + V   → Vertical split");
         shortcutVerticalSplit.setFont(monoFont);
 
+        JLabel shortcutMaximize = new JLabel("Ctrl + M   → Maximize/Restore");
+        shortcutMaximize.setFont(monoFont);
+
         JLabel shortcutSaveLayout = new JLabel("Ctrl + S   → Save layout");
         shortcutSaveLayout.setFont(monoFont);
 
@@ -102,6 +105,8 @@ public class AboutDialog extends JDialog {
         howToUsePanel.add(shortcutHorizontalSplit);
         howToUsePanel.add(Box.createVerticalStrut(3));
         howToUsePanel.add(shortcutVerticalSplit);
+        howToUsePanel.add(Box.createVerticalStrut(3));
+        howToUsePanel.add(shortcutMaximize);
         howToUsePanel.add(Box.createVerticalStrut(3));
         howToUsePanel.add(shortcutSaveLayout);
         howToUsePanel.add(Box.createVerticalStrut(3));
