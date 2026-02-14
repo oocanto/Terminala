@@ -10,8 +10,8 @@ This project exists because there are very few standalone terminal emulators wri
 
 ## Features
 
-- Standalone terminal emulator written in Java
-- Uses JetBrains **JediTerm** as the terminal widget
+- Standalone terminal emulator completely written in Java
+- Uses JetBrains **JediTerm** (https://github.com/JetBrains/jediterm) as the terminal widget
 - Multi-panel layout (Tilix-like behavior)
 - Real shell execution (PTY-based)
 - Desktop application (not an IDE plugin)
