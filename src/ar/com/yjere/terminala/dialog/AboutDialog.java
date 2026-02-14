@@ -96,11 +96,11 @@ public class AboutDialog extends JDialog {
         JLabel shortcutLoadLayout = new JLabel("Ctrl + L   → Load layout");
         shortcutLoadLayout.setFont(monoFont);
 
-        JLabel shortcutAbout = new JLabel("Ctrl + A   → About");
-        shortcutAbout.setFont(monoFont);
-
         JLabel shortcutCycleTerminals = new JLabel("Ctrl + Tab → Cycle terminals");
         shortcutCycleTerminals.setFont(monoFont);
+
+        JLabel shortcutAbout = new JLabel("Ctrl + A   → About");
+        shortcutAbout.setFont(monoFont);
 
         howToUsePanel.add(shortcutHorizontalSplit);
         howToUsePanel.add(Box.createVerticalStrut(3));
@@ -112,9 +112,9 @@ public class AboutDialog extends JDialog {
         howToUsePanel.add(Box.createVerticalStrut(3));
         howToUsePanel.add(shortcutLoadLayout);
         howToUsePanel.add(Box.createVerticalStrut(3));
-        howToUsePanel.add(shortcutAbout);
-        howToUsePanel.add(Box.createVerticalStrut(3));
         howToUsePanel.add(shortcutCycleTerminals);
+        howToUsePanel.add(Box.createVerticalStrut(3));
+        howToUsePanel.add(shortcutAbout);
 
         centerPanel.add(appNameLabel);
         centerPanel.add(Box.createVerticalStrut(5));
